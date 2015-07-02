@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{730E6F6E-9F05-4A1B-BFC0-40B0AA73FABA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Datalayer</RootNamespace>
+    <AssemblyName>Datalayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\ApplicationSettings.cs" />
+    <Compile Include="Entities\ChessBoardPiece.cs" />
+    <Compile Include="Entities\Engine.cs" />
+    <Compile Include="Entities\EngineOption.cs" />
+    <Compile Include="Entities\EngineOptionCombo.cs" />
+    <Compile Include="Entities\GameHistory.cs" />
+    <Compile Include="Migrations\201506091151168_InitialCreate.cs" />
+    <Compile Include="Migrations\201506091151168_InitialCreate.Designer.cs">
+      <DependentUpon>201506091151168_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506091159452_EngineOptions.cs" />
+    <Compile Include="Migrations\201506091159452_EngineOptions.Designer.cs">
+      <DependentUpon>201506091159452_EngineOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506091210151_EngineComboOption.cs" />
+    <Compile Include="Migrations\201506091210151_EngineComboOption.Designer.cs">
+      <DependentUpon>201506091210151_EngineComboOption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506111413523_AddGameNotation.cs" />
+    <Compile Include="Migrations\201506111413523_AddGameNotation.Designer.cs">
+      <DependentUpon>201506111413523_AddGameNotation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507011409488_AddApplicationSettings.cs" />
+    <Compile Include="Migrations\201507011409488_AddApplicationSettings.Designer.cs">
+      <DependentUpon>201507011409488_AddApplicationSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ImChessModel.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\EngineRepo.cs" />
+    <Compile Include="Repositories\GameHistoryRepo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201506091151168_InitialCreate.resx">
+      <DependentUpon>201506091151168_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506091159452_EngineOptions.resx">
+      <DependentUpon>201506091159452_EngineOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506091210151_EngineComboOption.resx">
+      <DependentUpon>201506091210151_EngineComboOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506111413523_AddGameNotation.resx">
+      <DependentUpon>201506111413523_AddGameNotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507011409488_AddApplicationSettings.resx">
+      <DependentUpon>201507011409488_AddApplicationSettings.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoreUtils\CoreUtils.csproj">
+      <Project>{29B2250A-86C8-4293-AE5F-473B8D07857B}</Project>
+      <Name>CoreUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

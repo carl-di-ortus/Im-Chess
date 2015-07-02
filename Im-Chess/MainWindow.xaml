@@ -1,0 +1,38 @@
+﻿<RibbonWindow x:Class="Im_Chess.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Im-Chess"
+        xmlns:local="clr-namespace:Im_Chess"
+        Closing="MainWindow_OnClosing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Ribbon x:Name="MainRibbon" SelectedIndex="0" Grid.Row="0">
+            <!-- Application Menu, located at the left-hand side (down arrow) -->
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu KeyTip="F">
+                    <RibbonApplicationMenuItem Header="New Game (white)" KeyTip="N" Click="NewGame_OnClick"/>
+                    <RibbonApplicationMenuItem Header="New Game (black)" KeyTip="B" Click="NewGameBlack_OnClick"/>
+                    <RibbonApplicationMenuItem Header="New Game (2 player)" KeyTip="T" Click="NewGameTwoPlayer_OnClick"/>
+                    <RibbonApplicationMenuItem Header="Exit" KeyTip="Q" Click="Exit_OnClick"/>
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+
+            <!-- Ribbon tab #1: Home -->
+            <RibbonTab Header="Home" KeyTip="H" >
+                <RibbonGroup x:Name="GameGroup" Header="Home">
+                    <RibbonMenuButton Label="New Game" KeyTip="N" LargeImageSource="im.ico">
+                        <RibbonMenuItem Header="New game (white)" KeyTip="W" Click="NewGame_OnClick"/>
+                        <RibbonMenuItem Header="New game (black)" KeyTip="B" Click="NewGameBlack_OnClick"/>
+                        <RibbonMenuItem Header="New game (2 player)" KeyTip="T" Click="NewGameTwoPlayer_OnClick"/>
+                    </RibbonMenuButton>
+                    <RibbonToggleButton Label="Flip board" Click="FlipBoard_OnClick" />
+                    <RibbonCheckBox Label="Autoflip" Checked="ToggleAutoFlip" Unchecked="ToggleAutoFlip" />
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+        <local:Board x:Name="MainBoard" Grid.Row="1"></local:Board>
+    </Grid>
+</RibbonWindow>
