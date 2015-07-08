@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201507011409488_AddApplicationSettings.Designer.cs">
       <DependentUpon>201507011409488_AddApplicationSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507030928536_ChangeAppSettingsColumnType.cs" />
+    <Compile Include="Migrations\201507030928536_ChangeAppSettingsColumnType.Designer.cs">
+      <DependentUpon>201507030928536_ChangeAppSettingsColumnType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ImChessModel.cs" />
     <Compile Include="Program.cs" />
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507011409488_AddApplicationSettings.resx">
       <DependentUpon>201507011409488_AddApplicationSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507030928536_ChangeAppSettingsColumnType.resx">
+      <DependentUpon>201507030928536_ChangeAppSettingsColumnType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

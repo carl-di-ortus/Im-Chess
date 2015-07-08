@@ -17,7 +17,7 @@ namespace Im_Chess
         private Image _draggedPiece;
         private Point _mousePosition;
         private Point _position;
-        private readonly EngineProcess _engine;
+        private EngineProcess _engine;
         private string _currentPosition;
         private string _gameNotation;
         private readonly MoveChecker _moveChecker;
@@ -25,8 +25,6 @@ namespace Im_Chess
         public Board()
         {
             InitializeComponent();
-
-            _engine = new EngineProcess(@"C:\Users\karolis.martinkus\Documents\Visual Studio 2013\Projects\Im-Chess\stockfish-6-64.exe");
 
             _moveChecker = new MoveChecker();
             Converters.Invert = false;
@@ -39,8 +37,19 @@ namespace Im_Chess
 
         public bool TwoPlayer { get; set; }
 
+        public string SetEngine(string path)
+        {
+            _engine = new EngineProcess(path);
+            return _engine.Engine.Name;
+        }
+
         public void MakeEngineMove()
         {
+            if (_engine == null)
+            {
+                return;
+            }
+
             var bestmove = _engine.Go(_gameNotation);
             _position = Converters.ConvertFromCoord(bestmove);
 
@@ -175,8 +184,6 @@ namespace Im_Chess
             };
             }
             
-
-            _engine.NewGame();
             _gameNotation = "position startpos moves ";
             ChessBoard.ItemsSource = Pieces;
             _moveChecker.SideToMove = Player.White;
@@ -297,7 +304,7 @@ namespace Im_Chess
             {
                 FlipBoard();
             }
-            if (!TwoPlayer)
+            if (!TwoPlayer && _engine != null)
             {
                 MakeEngineMove();
             }

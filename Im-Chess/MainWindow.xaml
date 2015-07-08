@@ -7,9 +7,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Ribbon x:Name="MainRibbon" SelectedIndex="0" Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <Ribbon x:Name="MainRibbon" SelectedIndex="0" Grid.Row="0" Grid.ColumnSpan="2">
             <!-- Application Menu, located at the left-hand side (down arrow) -->
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F">
@@ -21,8 +26,8 @@
             </Ribbon.ApplicationMenu>
 
             <!-- Ribbon tab #1: Home -->
-            <RibbonTab Header="Home" KeyTip="H" >
-                <RibbonGroup x:Name="GameGroup" Header="Home">
+            <RibbonTab x:Name="HomeTab" Header="Home" KeyTip="H">
+                <RibbonGroup x:Name="GameGroup" Header="Game">
                     <RibbonMenuButton Label="New Game" KeyTip="N" LargeImageSource="im.ico">
                         <RibbonMenuItem Header="New game (white)" KeyTip="W" Click="NewGame_OnClick"/>
                         <RibbonMenuItem Header="New game (black)" KeyTip="B" Click="NewGameBlack_OnClick"/>
@@ -31,8 +36,19 @@
                     <RibbonToggleButton Label="Flip board" Click="FlipBoard_OnClick" />
                     <RibbonCheckBox Label="Autoflip" Checked="ToggleAutoFlip" Unchecked="ToggleAutoFlip" />
                 </RibbonGroup>
+                <RibbonGroup x:Name="EngineGroup" Header="Engine">
+                    <RibbonButton Label="Go!" KeyTip="G"/>
+                    <RibbonButton x:Name="SelectEngineButton" Label="Select engine.." Click="SelectEngine_OnClick"/>
+                </RibbonGroup>
+            </RibbonTab>
+
+            <!-- Ribbon tab #2: Engine -->
+            <RibbonTab x:Name="EngineTab" Header="Engine" KeyTip="H" >
+                <!--<RibbonGroup x:Name="EngineOptions" Header="Options">
+                </RibbonGroup>-->
             </RibbonTab>
         </Ribbon>
-        <local:Board x:Name="MainBoard" Grid.Row="1"></local:Board>
+        
+        <local:Board x:Name="MainBoard" Grid.Row="1" Grid.Column="0"></local:Board>
     </Grid>
 </RibbonWindow>
