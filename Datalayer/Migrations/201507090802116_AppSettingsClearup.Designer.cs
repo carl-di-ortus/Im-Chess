@@ -7,13 +7,13 @@ namespace Datalayer.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class EngineComboOption : IMigrationMetadata
+    public sealed partial class AppSettingsClearup : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(EngineComboOption));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AppSettingsClearup));
         
         string IMigrationMetadata.Id
         {
-            get { return "201506091210151_EngineComboOption"; }
+            get { return "201507090802116_AppSettingsClearup"; }
         }
         
         string IMigrationMetadata.Source

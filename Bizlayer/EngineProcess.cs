@@ -39,7 +39,7 @@ namespace Bizlayer
             _engineProcess.StandardInput.WriteLine("ucinewgame");
         }
 
-        public string Go(string position)
+        public IEnumerable<string> Go(string position)
         {
             _engineProcess.StandardInput.WriteLine("ucinewgame");
             _engineProcess.StandardInput.WriteLine(position);
@@ -48,8 +48,8 @@ namespace Bizlayer
             while (!line.StartsWith("bestmove"))
             {
                 line = _engineProcess.StandardOutput.ReadLineAsync().Result;
+                yield return line;
             }
-            return line.Split(' ')[1];
         }
 
         private void StartUciMode()

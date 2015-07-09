@@ -23,7 +23,6 @@ namespace Datalayer
         public virtual DbSet<Engine> Engines { get; set; }
         public virtual DbSet<EngineOption> EngineOptions { get; set; }
         public virtual DbSet<GameHistory> Games { get; set; }
-        public virtual DbSet<ApplicationSetting> ApplicationSettings { get; set; } 
 
         public static ImChessModel Instance { get { return _instance ?? (_instance = new ImChessModel()); } }
     }

@@ -50,7 +50,20 @@ namespace Im_Chess
                 return;
             }
 
-            var bestmove = _engine.Go(_gameNotation);
+            var bestmove = "(none)";
+            var response = _engine.Go(_gameNotation);
+            foreach (var line in response)
+            {
+                if (line.StartsWith("bestmove"))
+                {
+                    bestmove = line.Split(' ')[1];
+                }
+                else
+                {
+                    var handler = (MainWindow) Application.Current.MainWindow;
+                    handler.AppendEngineOutput(line + "\n");
+                }
+            }
             _position = Converters.ConvertFromCoord(bestmove);
 
             if (bestmove == "(none)")
@@ -199,6 +212,8 @@ namespace Im_Chess
             var repo = new GameHistoryRepo();
             repo.AddGame(game);
         }
+
+        public event EventHandler EngineOutput;
 
         public void FlipBoard()
         {

@@ -53,35 +53,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\ApplicationSettings.cs" />
     <Compile Include="Entities\ChessBoardPiece.cs" />
     <Compile Include="Entities\Engine.cs" />
     <Compile Include="Entities\EngineOption.cs" />
     <Compile Include="Entities\EngineOptionCombo.cs" />
     <Compile Include="Entities\GameHistory.cs" />
-    <Compile Include="Migrations\201506091151168_InitialCreate.cs" />
-    <Compile Include="Migrations\201506091151168_InitialCreate.Designer.cs">
-      <DependentUpon>201506091151168_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201506091159452_EngineOptions.cs" />
-    <Compile Include="Migrations\201506091159452_EngineOptions.Designer.cs">
-      <DependentUpon>201506091159452_EngineOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201506091210151_EngineComboOption.cs" />
-    <Compile Include="Migrations\201506091210151_EngineComboOption.Designer.cs">
-      <DependentUpon>201506091210151_EngineComboOption.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201506111413523_AddGameNotation.cs" />
-    <Compile Include="Migrations\201506111413523_AddGameNotation.Designer.cs">
-      <DependentUpon>201506111413523_AddGameNotation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507011409488_AddApplicationSettings.cs" />
-    <Compile Include="Migrations\201507011409488_AddApplicationSettings.Designer.cs">
-      <DependentUpon>201507011409488_AddApplicationSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507030928536_ChangeAppSettingsColumnType.cs" />
-    <Compile Include="Migrations\201507030928536_ChangeAppSettingsColumnType.Designer.cs">
-      <DependentUpon>201507030928536_ChangeAppSettingsColumnType.cs</DependentUpon>
+    <Compile Include="Migrations\201507090802116_AppSettingsClearup.cs" />
+    <Compile Include="Migrations\201507090802116_AppSettingsClearup.Designer.cs">
+      <DependentUpon>201507090802116_AppSettingsClearup.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ImChessModel.cs" />
@@ -95,23 +74,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201506091151168_InitialCreate.resx">
-      <DependentUpon>201506091151168_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201506091159452_EngineOptions.resx">
-      <DependentUpon>201506091159452_EngineOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201506091210151_EngineComboOption.resx">
-      <DependentUpon>201506091210151_EngineComboOption.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201506111413523_AddGameNotation.resx">
-      <DependentUpon>201506111413523_AddGameNotation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507011409488_AddApplicationSettings.resx">
-      <DependentUpon>201507011409488_AddApplicationSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507030928536_ChangeAppSettingsColumnType.resx">
-      <DependentUpon>201507030928536_ChangeAppSettingsColumnType.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507090802116_AppSettingsClearup.resx">
+      <DependentUpon>201507090802116_AppSettingsClearup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

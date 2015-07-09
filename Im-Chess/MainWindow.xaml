@@ -3,7 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Im-Chess"
         xmlns:local="clr-namespace:Im_Chess"
-        Closing="MainWindow_OnClosing">
+        Closing="MainWindow_OnClosing"
+              xmlns:Properties="clr-namespace:Im_Chess.Properties"
+              WindowState="{Binding WindowState, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}"
+              Height="{Binding WindowHeight, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}"
+              Width="{Binding WindowWidth, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}"
+              Left="{Binding WindowLeft, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}"
+              Top="{Binding WindowTop, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -12,9 +18,10 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{Binding VerticalSplitterPosition, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}" />
         </Grid.ColumnDefinitions>
-        
-        <Ribbon x:Name="MainRibbon" SelectedIndex="0" Grid.Row="0" Grid.ColumnSpan="2">
+
+        <Ribbon x:Name="MainRibbon" SelectedIndex="0" Grid.Row="0" Grid.ColumnSpan="3">
             <!-- Application Menu, located at the left-hand side (down arrow) -->
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu KeyTip="F">
@@ -37,8 +44,8 @@
                     <RibbonCheckBox Label="Autoflip" Checked="ToggleAutoFlip" Unchecked="ToggleAutoFlip" />
                 </RibbonGroup>
                 <RibbonGroup x:Name="EngineGroup" Header="Engine">
-                    <RibbonButton Label="Go!" KeyTip="G"/>
                     <RibbonButton x:Name="SelectEngineButton" Label="Select engine.." Click="SelectEngine_OnClick"/>
+                    <RibbonButton Label="Go!" KeyTip="G"/>
                 </RibbonGroup>
             </RibbonTab>
 
@@ -48,7 +55,9 @@
                 </RibbonGroup>-->
             </RibbonTab>
         </Ribbon>
-        
-        <local:Board x:Name="MainBoard" Grid.Row="1" Grid.Column="0"></local:Board>
+
+        <local:Board x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"></local:Board>
+        <GridSplitter Grid.Row="1" Grid.Column="1" ResizeDirection="Columns" Width="3" HorizontalAlignment="Stretch"></GridSplitter>
+        <TextBox x:Name="EngineOuput" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch"></TextBox>
     </Grid>
 </RibbonWindow>

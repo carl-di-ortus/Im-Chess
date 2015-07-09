@@ -12,55 +12,27 @@ namespace Im_Chess
 {
     public partial class MainWindow : RibbonWindow
     {
-        private ImChessModel _db;
-
         public MainWindow()
         {
             InitializeComponent();
-            _db = ImChessModel.Instance;
-            if (_db.ApplicationSettings.Any())
+            var engine = Properties.Settings.Default.EnginePath;
+            if (!String.IsNullOrEmpty(engine))
             {
-                var settings = _db.ApplicationSettings.ToList();
-                Left = Convert.ToDouble(settings.First(s => s.Name == "Window Left").Value);
-                Top = Convert.ToDouble(settings.First(s => s.Name == "Window Top").Value);
-                Width = Convert.ToDouble(settings.First(s => s.Name == "Window Width").Value);
-                Height = Convert.ToDouble(settings.First(s => s.Name == "Window Height").Value);
-                
-                var setting = _db.ApplicationSettings.FirstOrDefault(s => s.Name == "Engine Path");
-                if (setting != null)
-                {
-                    var engineName = MainBoard.SetEngine(setting.Value);
-                    SelectEngineButton.Label = engineName;
-                    EngineTab.Header = engineName;
-                }
+                var engineName = MainBoard.SetEngine(engine);
+                SelectEngineButton.Label = engineName;
+                EngineTab.Header = engineName;
             }
             MainBoard.NewGame();
         }
 
+        public void AppendEngineOutput(string message)
+        {
+            EngineOuput.Text = EngineOuput.Text + message;
+        }
+
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            List<ApplicationSetting> settings;
-            if (_db.ApplicationSettings.Any())
-            {
-                settings = _db.ApplicationSettings.ToList();
-                settings.First(s => s.Name == "Window Left").Value = Left.ToString();
-                settings.First(s => s.Name == "Window Top").Value = Top.ToString();
-                settings.First(s => s.Name == "Window Width").Value = Width.ToString();
-                settings.First(s => s.Name == "Window Height").Value = Height.ToString();
-            }
-            else
-            {
-                settings = new List<ApplicationSetting>
-                {
-                    new ApplicationSetting() { Name = "Window Left", Value = Left.ToString() },
-                    new ApplicationSetting() { Name = "Window Top", Value = Top.ToString() },
-                    new ApplicationSetting() { Name = "Window Width", Value = Width.ToString() },
-                    new ApplicationSetting() { Name = "Window Height", Value = Height.ToString() }
-                };
-                _db.ApplicationSettings.AddRange(settings);
-            }
-            _db.SaveChanges();
-
+            Properties.Settings.Default.Save();
             MainBoard.SaveGame();
         }
 
@@ -68,12 +40,14 @@ namespace Im_Chess
         {
             MainBoard.NewGame();
             MainBoard.TwoPlayer = false;
+            EngineOuput.Text = "";
         }
 
         private void NewGameBlack_OnClick(object sender, RoutedEventArgs e)
         {
             MainBoard.NewGame();
             MainBoard.TwoPlayer = false;
+            EngineOuput.Text = "";
             MainBoard.MakeEngineMove();
         }
 
@@ -81,6 +55,7 @@ namespace Im_Chess
         {
             MainBoard.NewGame();
             MainBoard.TwoPlayer = true;
+            EngineOuput.Text = "";
         }
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
@@ -100,8 +75,6 @@ namespace Im_Chess
 
         private void SelectEngine_OnClick(object sender, RoutedEventArgs e)
         {
-            var setting = _db.ApplicationSettings.FirstOrDefault(s => s.Name == "Engine Path");
-
             var fileChooser = new OpenFileDialog { Filter = "Executables (*.exe)|*.exe", Multiselect = false, Title = "Select engine executable file" };
             fileChooser.ShowDialog();
             
@@ -116,16 +89,7 @@ namespace Im_Chess
                 var engineName = MainBoard.SetEngine(filepath);
                 SelectEngineButton.Label = engineName;
                 EngineTab.Header = engineName;
-
-                if (setting != null)
-                {
-                    setting.Value = filepath;
-                }
-                else
-                {
-                    _db.ApplicationSettings.Add(new ApplicationSetting() { Name = "Engine Path", Value = filepath });
-                }
-                _db.SaveChanges();
+                Properties.Settings.Default.EnginePath = filepath;
             }
             catch (Exception ex)
             {
