@@ -106,5 +106,17 @@ namespace Im_Chess.Properties {
                 this["EnginePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("240")]
+        public global::System.Windows.GridLength HorizontalSplitterPosition {
+            get {
+                return ((global::System.Windows.GridLength)(this["HorizontalSplitterPosition"]));
+            }
+            set {
+                this["HorizontalSplitterPosition"] = value;
+            }
+        }
     }
 }

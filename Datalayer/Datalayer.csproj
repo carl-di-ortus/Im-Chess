@@ -58,10 +58,6 @@
     <Compile Include="Entities\EngineOption.cs" />
     <Compile Include="Entities\EngineOptionCombo.cs" />
     <Compile Include="Entities\GameHistory.cs" />
-    <Compile Include="Migrations\201507090802116_AppSettingsClearup.cs" />
-    <Compile Include="Migrations\201507090802116_AppSettingsClearup.Designer.cs">
-      <DependentUpon>201507090802116_AppSettingsClearup.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ImChessModel.cs" />
     <Compile Include="Program.cs" />
@@ -72,11 +68,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201507090802116_AppSettingsClearup.resx">
-      <DependentUpon>201507090802116_AppSettingsClearup.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoreUtils\CoreUtils.csproj">

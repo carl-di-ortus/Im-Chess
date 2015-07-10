@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Ribbon;
-using Datalayer;
-using Datalayer.Entities;
 using Microsoft.Win32;
 
 namespace Im_Chess
@@ -27,7 +23,12 @@ namespace Im_Chess
 
         public void AppendEngineOutput(string message)
         {
-            EngineOuput.Text = EngineOuput.Text + message;
+            EngineOuput.Text = message + EngineOuput.Text;
+        }
+
+        public void ClearEngineOutput()
+        {
+            EngineOuput.Text = String.Empty;
         }
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)

@@ -50,6 +50,8 @@ namespace Im_Chess
                 return;
             }
 
+            var handler = (MainWindow)Application.Current.MainWindow;
+            handler.ClearEngineOutput();
             var bestmove = "(none)";
             var response = _engine.Go(_gameNotation);
             foreach (var line in response)
@@ -58,11 +60,7 @@ namespace Im_Chess
                 {
                     bestmove = line.Split(' ')[1];
                 }
-                else
-                {
-                    var handler = (MainWindow) Application.Current.MainWindow;
-                    handler.AppendEngineOutput(line + "\n");
-                }
+                handler.AppendEngineOutput(line + "\n");
             }
             _position = Converters.ConvertFromCoord(bestmove);
 

@@ -14,6 +14,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{Binding HorizontalSplitterPosition, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -58,6 +60,8 @@
 
         <local:Board x:Name="MainBoard" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"></local:Board>
         <GridSplitter Grid.Row="1" Grid.Column="1" ResizeDirection="Columns" Width="3" HorizontalAlignment="Stretch"></GridSplitter>
-        <TextBox x:Name="EngineOuput" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch"></TextBox>
+        <TextBox x:Name="EngineOuputV" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch"></TextBox>
+        <GridSplitter Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" ResizeDirection="Rows" Height="3" HorizontalAlignment="Stretch"></GridSplitter>
+        <TextBox x:Name="EngineOuput" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"></TextBox>
     </Grid>
 </RibbonWindow>

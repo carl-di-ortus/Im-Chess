@@ -23,5 +23,8 @@
     <Setting Name="EnginePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="HorizontalSplitterPosition" Type="System.Windows.GridLength" Scope="User">
+      <Value Profile="(Default)">240</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
