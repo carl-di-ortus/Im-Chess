@@ -44,7 +44,7 @@ namespace Im_Chess
         
         public bool IsLegalMove(IList<ChessPiece> pieces, ChessPiece piece, Point position, int x, int y)
         {
-            if (piece.Player != SideToMove || (x.IsEqual(position.X) && y.IsEqual(position.Y)) || IsKingInCheck(pieces, piece, x, y))
+            if (piece.Player != SideToMove || (x.IsEqual(position.X) && y.IsEqual(position.Y)) || IsKingInCheck(pieces, piece, position, x, y))
             {
                 return false;
             }
@@ -73,7 +73,7 @@ namespace Im_Chess
             SideToMove = SideToMove == Player.Black ? Player.White : Player.Black;
         }
 
-        private bool IsKingInCheck(ICollection<ChessPiece> pieces, ChessPiece piece, int x, int y)
+        private bool IsKingInCheck(IList<ChessPiece> pieces, ChessPiece piece, Point position, int x, int y)
         {
             // temporary piece if move was to capture another piece
             var removable = pieces.FirstOrDefault(p => p.Id != piece.Id && x.IsEqual(p.Pos.X) && y.IsEqual(p.Pos.Y));
@@ -81,6 +81,17 @@ namespace Im_Chess
             {
                 pieces.Remove(removable);
             }
+            else if (IsLegalPawnMove(pieces, piece, position, x, y))
+            {
+                if (EnPassanteRemove)
+                {
+                    EnPassante = true;
+                    EnPassanteRemove = false;
+                    removable = y == 5 ? pieces.FirstOrDefault(p => x.IsEqual(p.Pos.X) && 4.IsEqual(p.Pos.Y)) : pieces.FirstOrDefault(p => x.IsEqual(p.Pos.X) && 3.IsEqual(p.Pos.Y));
+                    pieces.Remove(removable);
+                }
+            }
+
             piece.Pos = new Point(x, y);
             
             var king = pieces.FirstOrDefault(p => p.Player == piece.Player && p.Type == PieceType.King);
@@ -294,7 +305,7 @@ namespace Im_Chess
             }
 
             // castling
-            if (IsKingInCheck(pieces, piece, oldX, oldY) || IsKingInCheck(pieces, piece, (oldX + x) / 2, (oldY + y) / 2))
+            if (IsKingInCheck(pieces, piece, position, oldX, oldY) || IsKingInCheck(pieces, piece, position, (oldX + x) / 2, (oldY + y) / 2))
             {
                 return false;
             }
@@ -376,7 +387,7 @@ namespace Im_Chess
                     EnPassanteRemove = false;
                     return true;
                 }
-                if (Math.Abs(oldX - x) == 1 && oldY == y - 1 && EnPassante && x == _enPassante && y == 6)
+                if (Math.Abs(oldX - x) == 1 && oldY == y - 1 && EnPassante && x == _enPassante && y == 5)
                 {
                     EnPassante = false;
                     EnPassanteRemove = true;

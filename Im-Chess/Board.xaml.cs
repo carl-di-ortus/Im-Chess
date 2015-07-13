@@ -379,7 +379,7 @@ namespace Im_Chess
 
         private void DropPiece(ChessPiece piece, double x, double y)
         {
-            var occupied = Pieces.FirstOrDefault(p => p.Pos.X == x && p.Pos.Y == y && p.Id != piece.Id);
+            var occupied = Pieces.FirstOrDefault(p => x.IsEqual(p.Pos.X) && y.IsEqual(p.Pos.Y) && p.Id != piece.Id);
             if (occupied != null)
             {
                 Pieces.Remove(occupied);
@@ -389,7 +389,8 @@ namespace Im_Chess
 
             if (_moveChecker.EnPassanteRemove)
             {
-                Pieces.Remove(piece.Player == Player.Black ? Pieces.First(p => p.Pos.X == x && p.Pos.Y == y - 1) : Pieces.First(p => p.Pos.X == x && p.Pos.Y == y + 1));
+                var removable = 2.IsEqual(y) ? Pieces.First(p => x.IsEqual(p.Pos.X) && 3.IsEqual(p.Pos.Y)) : Pieces.First(p => x.IsEqual(p.Pos.X) && 4.IsEqual(p.Pos.Y));
+                Pieces.Remove(removable);
             }
         }
     }

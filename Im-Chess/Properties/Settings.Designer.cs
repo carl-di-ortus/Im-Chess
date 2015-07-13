@@ -25,7 +25,7 @@ namespace Im_Chess.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("189")]
         public double WindowTop {
             get {
                 return ((double)(this["WindowTop"]));
@@ -37,7 +37,7 @@ namespace Im_Chess.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2210")]
         public double WindowLeft {
             get {
                 return ((double)(this["WindowLeft"]));
@@ -85,7 +85,7 @@ namespace Im_Chess.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("240")]
+        [global::System.Configuration.DefaultSettingValueAttribute("484")]
         public global::System.Windows.GridLength VerticalSplitterPosition {
             get {
                 return ((global::System.Windows.GridLength)(this["VerticalSplitterPosition"]));
@@ -109,7 +109,7 @@ namespace Im_Chess.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("240")]
+        [global::System.Configuration.DefaultSettingValueAttribute("104")]
         public global::System.Windows.GridLength HorizontalSplitterPosition {
             get {
                 return ((global::System.Windows.GridLength)(this["HorizontalSplitterPosition"]));
