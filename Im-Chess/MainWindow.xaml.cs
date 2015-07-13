@@ -31,6 +31,16 @@ namespace Im_Chess
             EngineOuput.Text = String.Empty;
         }
 
+        private void EngineGo_OnClick(object sender, RoutedEventArgs e)
+        {
+            MainBoard.MakeEngineMove();
+        }
+
+        private void Exit_OnClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
             Properties.Settings.Default.Save();
@@ -57,11 +67,6 @@ namespace Im_Chess
             MainBoard.NewGame();
             MainBoard.TwoPlayer = true;
             EngineOuput.Text = "";
-        }
-
-        private void Exit_OnClick(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
         }
 
         private void FlipBoard_OnClick(object sender, RoutedEventArgs e)

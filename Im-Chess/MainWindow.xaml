@@ -47,7 +47,7 @@
                 </RibbonGroup>
                 <RibbonGroup x:Name="EngineGroup" Header="Engine">
                     <RibbonButton x:Name="SelectEngineButton" Label="Select engine.." Click="SelectEngine_OnClick"/>
-                    <RibbonButton Label="Go!" KeyTip="G"/>
+                    <RibbonButton Label="Go!" KeyTip="G" Click="EngineGo_OnClick"/>
                 </RibbonGroup>
             </RibbonTab>
 
@@ -55,6 +55,10 @@
             <RibbonTab x:Name="EngineTab" Header="Engine" KeyTip="H" >
                 <!--<RibbonGroup x:Name="EngineOptions" Header="Options">
                 </RibbonGroup>-->
+            </RibbonTab>
+
+            <!-- Ribbon tab #3: Customize -->
+            <RibbonTab x:Name="CustomizeTab" Header="Customize" KeyTip="C" >
             </RibbonTab>
         </Ribbon>
 

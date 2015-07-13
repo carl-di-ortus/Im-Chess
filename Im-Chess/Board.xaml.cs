@@ -69,7 +69,12 @@ namespace Im_Chess
                 return;
             }
 
-            var piece = Pieces.First(p => p.Pos.X == _position.X && p.Pos.Y == _position.Y);
+            var piece = Pieces.First(p => p.Pos.X.IsEqual(_position.X) && p.Pos.Y.IsEqual(_position.Y));
+            if (piece == null)
+            {
+                return;
+            }
+
             var position = Converters.ConvertFromCoord(bestmove.Substring(2));
 
             if (!_moveChecker.IsLegalMove(Pieces, piece, piece.Pos, Convert.ToInt32(position.X), Convert.ToInt32(position.Y)))
@@ -80,18 +85,18 @@ namespace Im_Chess
             DrawMoveArrow(piece, _position, new Point(position.X, position.Y));
             DropPiece(piece, position.X, position.Y);
 
-            if (piece.Type == PieceType.King && position.X - _position.X == -2)
+            if (piece.Type == PieceType.King && (-2).IsEqual(position.X - _position.X))
             {
-                var rook = Pieces.First(p => p.Type == PieceType.Rook && p.Pos.Y == _position.Y && p.Pos.X == 0);
+                var rook = Pieces.First(p => p.Type == PieceType.Rook && p.Pos.Y.IsEqual(_position.Y) && p.Pos.X.IsEqual(0));
                 DropPiece(rook, position.X + 1, position.Y);
             }
-            if (piece.Type == PieceType.King && position.X - _position.X == 2)
+            if (piece.Type == PieceType.King && 2.IsEqual(position.X - _position.X))
             {
-                var rook = Pieces.First(p => p.Type == PieceType.Rook && p.Pos.Y == _position.Y && p.Pos.X == 7);
+                var rook = Pieces.First(p => p.Type == PieceType.Rook && p.Pos.Y.IsEqual(_position.Y) && p.Pos.X.IsEqual(7));
                 DropPiece(rook, position.X - 1, position.Y);
             }
 
-            if (piece.Type == PieceType.Pawn && (position.Y == 0 || position.Y == 7) && bestmove.Length == 5)
+            if (piece.Type == PieceType.Pawn && (position.Y.IsEqual(0) || position.Y.IsEqual(7)) && bestmove.Length == 5)
             {
                 switch (bestmove.ToLower()[5])
                 {
