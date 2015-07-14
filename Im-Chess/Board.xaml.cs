@@ -98,7 +98,7 @@ namespace Im_Chess
 
             if (piece.Type == PieceType.Pawn && (position.Y.IsEqual(0) || position.Y.IsEqual(7)) && bestmove.Length == 5)
             {
-                switch (bestmove.ToLower()[5])
+                switch (bestmove.ToLower()[4])
                 {
                     case 'n':
                         piece.Type = PieceType.Knight;
