@@ -85,17 +85,20 @@ namespace Im_Chess
             DrawMoveArrow(piece, _position, new Point(position.X, position.Y));
             DropPiece(piece, position.X, position.Y);
 
-            if (piece.Type == PieceType.King && (-2).IsEqual(position.X - _position.X))
+            if (piece.Type == PieceType.King)
             {
-                var rook = Pieces.First(p => p.Type == PieceType.Rook && p.Pos.Y.IsEqual(_position.Y) && p.Pos.X.IsEqual(0));
-                DropPiece(rook, position.X + 1, position.Y);
+                if ((-2).IsEqual(position.X - _position.X))
+                {
+                    var rook = Pieces.First(p => p.Type == PieceType.Rook && p.Pos.Y.IsEqual(_position.Y) && p.Pos.X.IsEqual(0));
+                    DropPiece(rook, position.X + 1, position.Y);
+                }
+                if (2.IsEqual(position.X - _position.X))
+                {
+                    var rook = Pieces.First(p => p.Type == PieceType.Rook && p.Pos.Y.IsEqual(_position.Y) && p.Pos.X.IsEqual(7));
+                    DropPiece(rook, position.X - 1, position.Y);
+                }
             }
-            if (piece.Type == PieceType.King && 2.IsEqual(position.X - _position.X))
-            {
-                var rook = Pieces.First(p => p.Type == PieceType.Rook && p.Pos.Y.IsEqual(_position.Y) && p.Pos.X.IsEqual(7));
-                DropPiece(rook, position.X - 1, position.Y);
-            }
-
+            
             if (piece.Type == PieceType.Pawn && (position.Y.IsEqual(0) || position.Y.IsEqual(7)) && bestmove.Length == 5)
             {
                 switch (bestmove.ToLower()[4])
@@ -202,7 +205,7 @@ namespace Im_Chess
             
             _gameNotation = "position startpos moves ";
             ChessBoard.ItemsSource = Pieces;
-            _moveChecker.SideToMove = Player.White;
+            _moveChecker.Reset();
         }
 
         public void SaveGame()

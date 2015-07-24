@@ -9,30 +9,13 @@ namespace Im_Chess
     public class MoveChecker
     {
         private int _enPassante;
-        private readonly Dictionary<Player, bool> _canCastleShort;
-        private readonly Dictionary<Player, bool> _canCastleLong;
-        private readonly Dictionary<Player, bool> _hasCastled;
+        private Dictionary<Player, bool> _canCastleShort;
+        private Dictionary<Player, bool> _canCastleLong;
+        private Dictionary<Player, bool> _hasCastled;
 
         public MoveChecker()
         {
-            Check = false;
-            EnPassante = false;
-            SideToMove = Player.White;
-            _canCastleShort = new Dictionary<Player, bool>
-            {
-                { Player.White, true },
-                { Player.Black, true }
-            };
-            _canCastleLong = new Dictionary<Player, bool>
-            {
-                { Player.White, true },
-                { Player.Black, true }
-            };
-            _hasCastled = new Dictionary<Player, bool>
-            {
-                { Player.White, false },
-                { Player.Black, false }
-            };
+            Reset();
         }
 
         public bool Check { get; set; }
@@ -66,6 +49,28 @@ namespace Im_Chess
                     return IsLegalRookMove(pieces, piece, position, x, y);
             }
             return false;
+        }
+
+        public void Reset()
+        {
+            Check = false;
+            EnPassante = false;
+            SideToMove = Player.White;
+            _canCastleShort = new Dictionary<Player, bool>
+            {
+                { Player.White, true },
+                { Player.Black, true }
+            };
+            _canCastleLong = new Dictionary<Player, bool>
+            {
+                { Player.White, true },
+                { Player.Black, true }
+            };
+            _hasCastled = new Dictionary<Player, bool>
+            {
+                { Player.White, false },
+                { Player.Black, false }
+            };
         }
 
         public void ToggleSideToMove()
