@@ -109,112 +109,14 @@ namespace Im_Chess
                 return true;
             }
 
+            if (KingInCheckByRook(pieces, king, removable) || KingInCheckByBishop(pieces, king, removable))
+            {
+                return true;
+            }
+
             var kingx = Convert.ToInt32(king.Pos.X);
             var kingy = Convert.ToInt32(king.Pos.Y);
 
-            foreach (var sq in kingx.To(0).Select(i => pieces.FirstOrDefault(p => p.Id != king.Id && i.IsEqual(p.Pos.X) && kingy.IsEqual(p.Pos.Y))).Where(sq => sq != null))
-            {
-                if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Rook))
-                {
-                    return true;
-                }
-                break;
-            }
-
-            foreach (var sq in kingx.To(7).Select(i => pieces.FirstOrDefault(p => p.Id != king.Id && i.IsEqual(p.Pos.X) && kingy.IsEqual(p.Pos.Y))).Where(sq => sq != null))
-            {
-                if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Rook))
-                {
-                    return true;
-                }
-                break;
-            }
-
-            foreach (var sq in kingy.To(0).Select(i => pieces.FirstOrDefault(p => p.Id != king.Id && kingx.IsEqual(p.Pos.X) && i.IsEqual(p.Pos.Y))).Where(sq => sq != null))
-            {
-                if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Rook))
-                {
-                    return true;
-                }
-                break;
-            }
-
-            foreach (var sq in kingy.To(7).Select(i => pieces.FirstOrDefault(p => p.Id != king.Id && kingx.IsEqual(p.Pos.X) && i.IsEqual(p.Pos.Y))).Where(sq => sq != null))
-            {
-                if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Rook))
-                {
-                    return true;
-                }
-                break;
-            }
-
-            var nx = kingx + 1;
-            var ny = kingy + 1;
-            while (nx < 8 && ny < 8)
-            {
-                var sq = pieces.FirstOrDefault(p => p.Id != king.Id && nx.IsEqual(p.Pos.X) && ny.IsEqual(p.Pos.Y));
-                if (sq != null)
-                {
-                    if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Bishop))
-                    {
-                        return true;
-                    }
-                    break;
-                }
-                nx++;
-                ny++;
-            }
-
-            nx = kingx + 1;
-            ny = kingy - 1;
-            while (nx < 8 && ny >= 0)
-            {
-                var sq = pieces.FirstOrDefault(p => p.Id != king.Id && nx.IsEqual(p.Pos.X) && ny.IsEqual(p.Pos.Y));
-                if (sq != null)
-                {
-                    if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Bishop))
-                    {
-                        return true;
-                    }
-                    break;
-                }
-                nx++;
-                ny--;
-            }
-
-            nx = kingx - 1;
-            ny = kingy - 1;
-            while (nx >= 0 && ny >= 0)
-            {
-                var sq = pieces.FirstOrDefault(p => p.Id != king.Id && nx.IsEqual(p.Pos.X) && ny.IsEqual(p.Pos.Y));
-                if (sq != null)
-                {
-                    if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Bishop))
-                    {
-                        return true;
-                    }
-                    break;
-                }
-                nx--;
-                ny--;
-            }
-
-            nx = kingx - 1;
-            ny = kingy + 1;
-            while (nx >= 0 && ny < 8)
-            {
-                var sq = pieces.FirstOrDefault(p => p.Id != king.Id && nx.IsEqual(p.Pos.X) && ny.IsEqual(p.Pos.Y));
-                if (sq != null)
-                {
-                    if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Bishop))
-                    {
-                        return true;
-                    }
-                    break;
-                }
-                nx--;
-                ny++;
-            }
 
             if (
                 pieces.Any(
@@ -491,6 +393,124 @@ namespace Im_Chess
                     _canCastleLong[piece.Player] = false;
                 }
                 return true;
+            }
+            return false;
+        }
+
+        private bool KingInCheckByBishop(ICollection<ChessPiece> pieces, ChessPiece king, ChessPiece removable)
+        {
+            var kingx = Convert.ToInt32(king.Pos.X);
+            var kingy = Convert.ToInt32(king.Pos.Y);
+
+            var nx = kingx + 1;
+            var ny = kingy + 1;
+            while (nx < 8 && ny < 8)
+            {
+                var sq = pieces.FirstOrDefault(p => p.Id != king.Id && nx.IsEqual(p.Pos.X) && ny.IsEqual(p.Pos.Y));
+                if (sq != null)
+                {
+                    if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Bishop))
+                    {
+                        return true;
+                    }
+                    break;
+                }
+                nx++;
+                ny++;
+            }
+
+            nx = kingx + 1;
+            ny = kingy - 1;
+            while (nx < 8 && ny >= 0)
+            {
+                var sq = pieces.FirstOrDefault(p => p.Id != king.Id && nx.IsEqual(p.Pos.X) && ny.IsEqual(p.Pos.Y));
+                if (sq != null)
+                {
+                    if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Bishop))
+                    {
+                        return true;
+                    }
+                    break;
+                }
+                nx++;
+                ny--;
+            }
+
+            nx = kingx - 1;
+            ny = kingy - 1;
+            while (nx >= 0 && ny >= 0)
+            {
+                var sq = pieces.FirstOrDefault(p => p.Id != king.Id && nx.IsEqual(p.Pos.X) && ny.IsEqual(p.Pos.Y));
+                if (sq != null)
+                {
+                    if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Bishop))
+                    {
+                        return true;
+                    }
+                    break;
+                }
+                nx--;
+                ny--;
+            }
+
+            nx = kingx - 1;
+            ny = kingy + 1;
+            while (nx >= 0 && ny < 8)
+            {
+                var sq = pieces.FirstOrDefault(p => p.Id != king.Id && nx.IsEqual(p.Pos.X) && ny.IsEqual(p.Pos.Y));
+                if (sq != null)
+                {
+                    if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Bishop))
+                    {
+                        return true;
+                    }
+                    break;
+                }
+                nx--;
+                ny++;
+            }
+            return false;
+        }
+
+        private bool KingInCheckByRook(ICollection<ChessPiece> pieces, ChessPiece king, ChessPiece removable)
+        {
+            var kingx = Convert.ToInt32(king.Pos.X);
+            var kingy = Convert.ToInt32(king.Pos.Y);
+
+            foreach (var sq in kingx.To(0).Select(i => pieces.FirstOrDefault(p => p.Id != king.Id && i.IsEqual(p.Pos.X) && kingy.IsEqual(p.Pos.Y))).Where(sq => sq != null))
+            {
+                if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Rook))
+                {
+                    return true;
+                }
+                break;
+            }
+
+            foreach (var sq in kingx.To(7).Select(i => pieces.FirstOrDefault(p => p.Id != king.Id && i.IsEqual(p.Pos.X) && kingy.IsEqual(p.Pos.Y))).Where(sq => sq != null))
+            {
+                if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Rook))
+                {
+                    return true;
+                }
+                break;
+            }
+
+            foreach (var sq in kingy.To(0).Select(i => pieces.FirstOrDefault(p => p.Id != king.Id && kingx.IsEqual(p.Pos.X) && i.IsEqual(p.Pos.Y))).Where(sq => sq != null))
+            {
+                if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Rook))
+                {
+                    return true;
+                }
+                break;
+            }
+
+            foreach (var sq in kingy.To(7).Select(i => pieces.FirstOrDefault(p => p.Id != king.Id && kingx.IsEqual(p.Pos.X) && i.IsEqual(p.Pos.Y))).Where(sq => sq != null))
+            {
+                if (KingOctagonalCheck(pieces, sq, removable, king.Player, PieceType.Rook))
+                {
+                    return true;
+                }
+                break;
             }
             return false;
         }
