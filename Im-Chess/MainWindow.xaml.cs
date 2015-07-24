@@ -134,7 +134,7 @@ namespace Im_Chess
                         Margin = new Thickness(5, 0, 5, 0),
                         HorizontalContentAlignment = HorizontalAlignment.Left,
                         FlowDirection = FlowDirection.RightToLeft,
-                        MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 40,
+                        MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 50,
                     });
                 }
                 if (option.Type == EngineOptionType.Spin)
@@ -150,7 +150,30 @@ namespace Im_Chess
                             Maximum = Convert.ToInt32(option.MaxValue)
                         },
                         Margin = new Thickness(5, 0, 5, 0),
-                        MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 40,
+                        MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 50,
+                    });
+                }
+                if (option.Type == EngineOptionType.Combo)
+                {
+                    //todo
+                }
+                if (option.Type == EngineOptionType.Button)
+                {
+                    oplist.Add(new RibbonButton
+                    {
+                        Label = option.Name,
+                        Margin = new Thickness(5, 0, 5, 0),
+                        MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 50
+                    });
+                }
+                if (option.Type == EngineOptionType.String)
+                {
+                    oplist.Add(new RibbonTextBox
+                    {
+                        Label = option.Name,
+                        Text = option.Value,
+                        Margin = new Thickness(5, 0, 5, 0),
+                        MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 50,
                     });
                 }
 
@@ -169,7 +192,7 @@ namespace Im_Chess
             if (oplist.Count > 0)
             {
                 max = oplist.Max(i => ((Control)i).MinWidth);
-                foreach (UserControl item in oplist)
+                foreach (Control item in oplist)
                 {
                     item.MinWidth = max;
                     EngineOptions.Items.Add(item);
