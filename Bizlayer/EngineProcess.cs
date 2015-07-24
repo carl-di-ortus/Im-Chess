@@ -34,6 +34,31 @@ namespace Bizlayer
 
         public Engine Engine { get; private set; }
 
+        public EngineOption Option
+        {
+            set
+            {
+                _engineProcess.StandardInput.WriteLine("setoption name " + value.Name + " value " + value.Value);
+                _repo.SetOption(Engine.Name, value.Name, value.Value);
+            }
+        }
+
+        public List<EngineOption> Options
+        {
+            get
+            {
+                return _repo.Get(Engine.Name).Options;
+            }
+            set
+            {
+                var existingEngine = _repo.Get(Engine.Name);
+                foreach (var option in existingEngine.Options.Where(o => value.Any(on => on.Name == o.Name && on.Value != o.Value)))
+                {
+                    Option = option;
+                }
+            }
+        }
+
         public void NewGame()
         {
             _engineProcess.StandardInput.WriteLine("ucinewgame");
@@ -78,28 +103,17 @@ namespace Bizlayer
                     case "uciok":
                         Console.WriteLine("uciok");
                         break;
-                    default:
-                        break;
                 }
             }
 
             if (_repo.Exists(Engine.Name))
             {
-                var existingEngine = _repo.Get(Engine.Name);
-                foreach (var option in existingEngine.Options.Where(o => Engine.Options.Any(on => on.Name == o.Name && on.Value != o.Value)))
-                {
-                    _engineProcess.StandardInput.WriteLine("setoption name " + option.Name + " value " + option.Value);
-                }
+                Options = _repo.Get(Engine.Name).Options;
             }
             else
             {
                 _repo.Create(Engine);
-                Console.WriteLine("Adding engine to DB");
-                Console.WriteLine(Engine.Name);
-                Console.WriteLine(Engine.Author);
             }
-
-            Console.ReadLine();
         }
 
         private void ReadEngineId(string line)
@@ -166,7 +180,6 @@ namespace Bizlayer
                     Console.WriteLine("Warning! unrecognised engine option type recieved, ignoring - following engine setting will be unconfigurable:");
                     Console.WriteLine(stdin);
                     return null;
-                    break;
             }
             return option;
         }

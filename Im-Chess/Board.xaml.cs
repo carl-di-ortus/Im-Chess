@@ -37,6 +37,11 @@ namespace Im_Chess
 
         public bool TwoPlayer { get; set; }
 
+        public List<EngineOption> GetEngineOptions()
+        {
+            return _engine.Options;
+        }
+
         public string SetEngine(string path)
         {
             _engine = new EngineProcess(path);

@@ -1,8 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Ribbon;
-using Microsoft.Win32;
+using System.Windows.Forms;
+using Datalayer.Entities;
+using Application = System.Windows.Application;
+using Control = System.Windows.Controls.Control;
+using FlowDirection = System.Windows.FlowDirection;
+using HorizontalAlignment = System.Windows.HorizontalAlignment;
+using Label = System.Windows.Forms.Label;
+using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace Im_Chess
 {
@@ -17,6 +28,7 @@ namespace Im_Chess
                 var engineName = MainBoard.SetEngine(engine);
                 SelectEngineButton.Label = engineName;
                 EngineTab.Header = engineName;
+                InitEngineOptions();
             }
             MainBoard.NewGame();
         }
@@ -96,10 +108,72 @@ namespace Im_Chess
                 SelectEngineButton.Label = engineName;
                 EngineTab.Header = engineName;
                 Properties.Settings.Default.EnginePath = filepath;
+                InitEngineOptions();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("There was an error reading executable", "Unrecognized engine", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void InitEngineOptions()
+        {
+            EngineOptions.Items.Clear();
+            EngineOptions.GroupSizeDefinitions = new RibbonGroupSizeDefinitionBaseCollection();
+            var options = MainBoard.GetEngineOptions();
+            var oplist = new List<object>();
+            double max;
+            foreach (var option in options)
+            {
+                if (option.Type == EngineOptionType.Check)
+                {
+                    oplist.Add(new RibbonCheckBox
+                    {
+                        Label = option.Name,
+                        IsChecked = Convert.ToBoolean(option.Value),
+                        Margin = new Thickness(5, 0, 5, 0),
+                        HorizontalContentAlignment = HorizontalAlignment.Left,
+                        FlowDirection = FlowDirection.RightToLeft,
+                        MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 40,
+                    });
+                }
+                if (option.Type == EngineOptionType.Spin)
+                {
+                    oplist.Add(new Spinner
+                    {
+                        SpinnerBlock = { Text = option.Name },
+                        IntegerUpDown =
+                        {
+                            Value = Convert.ToInt32(option.Value),
+                            Increment = 1,
+                            Minimum = Convert.ToInt32(option.MinValue),
+                            Maximum = Convert.ToInt32(option.MaxValue)
+                        },
+                        Margin = new Thickness(5, 0, 5, 0),
+                        MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 40,
+                    });
+                }
+
+                if (oplist.Count == 3)
+                {
+                    max = oplist.Max(i => ((Control)i).MinWidth);
+                    foreach (Control item in oplist)
+                    {
+                        item.MinWidth = max;
+                        EngineOptions.Items.Add(item);
+                    }
+                    oplist.Clear();
+                }
+            }
+
+            if (oplist.Count > 0)
+            {
+                max = oplist.Max(i => ((Control)i).MinWidth);
+                foreach (UserControl item in oplist)
+                {
+                    item.MinWidth = max;
+                    EngineOptions.Items.Add(item);
+                }
             }
         }
     }

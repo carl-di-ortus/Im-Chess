@@ -53,8 +53,8 @@
 
             <!-- Ribbon tab #2: Engine -->
             <RibbonTab x:Name="EngineTab" Header="Engine" KeyTip="H" >
-                <!--<RibbonGroup x:Name="EngineOptions" Header="Options">
-                </RibbonGroup>-->
+                <RibbonGroup x:Name="EngineOptions" Header="Options">
+                </RibbonGroup>
             </RibbonTab>
 
             <!-- Ribbon tab #3: Customize -->
