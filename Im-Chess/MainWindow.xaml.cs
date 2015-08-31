@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Forms;
 using Datalayer.Entities;
+using Xceed.Wpf.Toolkit;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using FlowDirection = System.Windows.FlowDirection;
@@ -127,7 +128,7 @@ namespace Im_Chess
             {
                 if (option.Type == EngineOptionType.Check)
                 {
-                    oplist.Add(new RibbonCheckBox
+                    var checkbox = new RibbonCheckBox
                     {
                         Label = option.Name,
                         IsChecked = Convert.ToBoolean(option.Value),
@@ -135,23 +136,22 @@ namespace Im_Chess
                         HorizontalContentAlignment = HorizontalAlignment.Left,
                         FlowDirection = FlowDirection.RightToLeft,
                         MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 50,
-                    });
+                    };
+                    checkbox.Checked += EngineOptionChanged;
+                    checkbox.Unchecked += EngineOptionChanged;
+                    oplist.Add(checkbox);
                 }
                 if (option.Type == EngineOptionType.Spin)
                 {
-                    oplist.Add(new Spinner
+                    var spinner = new Spinner
                     {
                         SpinnerBlock = { Text = option.Name },
-                        IntegerUpDown =
-                        {
-                            Value = Convert.ToInt32(option.Value),
-                            Increment = 1,
-                            Minimum = Convert.ToInt32(option.MinValue),
-                            Maximum = Convert.ToInt32(option.MaxValue)
-                        },
+                        IntegerUpDown = { Uid = option.Name, Value = Convert.ToInt32(option.Value), Increment = 1, Minimum = Convert.ToInt32(option.MinValue), Maximum = Convert.ToInt32(option.MaxValue) },
                         Margin = new Thickness(5, 0, 5, 0),
                         MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 50,
-                    });
+                    };
+                    spinner.IntegerUpDown.ValueChanged += EngineOptionChanged;
+                    oplist.Add(spinner);
                 }
                 if (option.Type == EngineOptionType.Combo)
                 {
@@ -159,22 +159,26 @@ namespace Im_Chess
                 }
                 if (option.Type == EngineOptionType.Button)
                 {
-                    oplist.Add(new RibbonButton
+                    var button = new RibbonButton
                     {
                         Label = option.Name,
                         Margin = new Thickness(5, 0, 5, 0),
                         MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 50
-                    });
+                    };
+                    button.Click += EngineOptionChanged;
+                    oplist.Add(button);
                 }
                 if (option.Type == EngineOptionType.String)
                 {
-                    oplist.Add(new RibbonTextBox
+                    var textbox = new RibbonTextBox
                     {
                         Label = option.Name,
                         Text = option.Value,
                         Margin = new Thickness(5, 0, 5, 0),
                         MinWidth = TextRenderer.MeasureText(option.Name, (new Label()).Font).Width + 50,
-                    });
+                    };
+                    textbox.TextChanged += EngineOptionChanged;
+                    oplist.Add(textbox);
                 }
 
                 if (oplist.Count == 3)
@@ -197,6 +201,44 @@ namespace Im_Chess
                     item.MinWidth = max;
                     EngineOptions.Items.Add(item);
                 }
+            }
+        }
+
+        private void EngineOptionChanged(object sender, RoutedEventArgs e)
+        {
+            var checkbox = sender as RibbonCheckBox;
+            if (checkbox != null)
+            {
+                MainBoard.SetEngineOption(checkbox.Label, checkbox.IsChecked.ToString());
+                return;
+            }
+
+            var spinner = sender as IntegerUpDown;
+            if (spinner != null)
+            {
+                MainBoard.SetEngineOption(spinner.Uid, spinner.Value.ToString());
+                return;
+            }
+
+            // todo
+            //var combo = sender as Combo;
+            //if (combo != null)
+            //{
+            //    MainBoard.SetEngineOption(combo.Text, combo.Value.ToString());
+            //    return;
+            //}
+
+            var button = sender as RibbonButton;
+            if (button != null)
+            {
+                MainBoard.SetEngineOption(button.Label, String.Empty);
+                return;
+            }
+
+            var textbox = sender as RibbonTextBox;
+            if (textbox != null)
+            {
+                MainBoard.SetEngineOption(textbox.Label, textbox.Text);
             }
         }
     }

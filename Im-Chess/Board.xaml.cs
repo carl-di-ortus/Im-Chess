@@ -42,6 +42,11 @@ namespace Im_Chess
             return _engine.Options;
         }
 
+        public void SetEngineOption(string name, string value)
+        {
+            _engine.Option = new EngineOption(){Name = name, Value = value == String.Empty ? "<empty>" : value};
+        }
+
         public string SetEngine(string path)
         {
             _engine = new EngineProcess(path);
