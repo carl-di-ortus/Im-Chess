@@ -49,72 +49,52 @@ namespace Im_Chess
             MainBoard.MakeEngineMove();
         }
 
+        private void EngineOptionChanged(object sender, RoutedEventArgs e)
+        {
+            var checkbox = sender as RibbonCheckBox;
+            if (checkbox != null)
+            {
+                MainBoard.SetEngineOption(checkbox.Label, checkbox.IsChecked.ToString());
+                return;
+            }
+
+            var spinner = sender as IntegerUpDown;
+            if (spinner != null)
+            {
+                MainBoard.SetEngineOption(spinner.Uid, spinner.Value.ToString());
+                return;
+            }
+
+            // todo
+            //var combo = sender as Combo;
+            //if (combo != null)
+            //{
+            //    MainBoard.SetEngineOption(combo.Text, combo.Value.ToString());
+            //    return;
+            //}
+
+            var button = sender as RibbonButton;
+            if (button != null)
+            {
+                MainBoard.SetEngineOption(button.Label, String.Empty);
+                return;
+            }
+
+            var textbox = sender as RibbonTextBox;
+            if (textbox != null)
+            {
+                MainBoard.SetEngineOption(textbox.Label, textbox.Text);
+            }
+        }
+
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
-        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
-        {
-            Properties.Settings.Default.Save();
-            MainBoard.SaveGame();
-        }
-
-        private void NewGame_OnClick(object sender, RoutedEventArgs e)
-        {
-            MainBoard.NewGame();
-            MainBoard.TwoPlayer = false;
-            EngineOuput.Text = "";
-        }
-
-        private void NewGameBlack_OnClick(object sender, RoutedEventArgs e)
-        {
-            MainBoard.NewGame();
-            MainBoard.TwoPlayer = false;
-            EngineOuput.Text = "";
-            MainBoard.MakeEngineMove();
-        }
-
-        private void NewGameTwoPlayer_OnClick(object sender, RoutedEventArgs e)
-        {
-            MainBoard.NewGame();
-            MainBoard.TwoPlayer = true;
-            EngineOuput.Text = "";
-        }
-
         private void FlipBoard_OnClick(object sender, RoutedEventArgs e)
         {
             MainBoard.FlipBoard();
-        }
-
-        private void ToggleAutoFlip(object sender, RoutedEventArgs e)
-        {
-            MainBoard.AutoFlip = !MainBoard.AutoFlip;
-        }
-
-        private void SelectEngine_OnClick(object sender, RoutedEventArgs e)
-        {
-            var fileChooser = new OpenFileDialog { Filter = "Executables (*.exe)|*.exe", Multiselect = false, Title = "Select engine executable file" };
-            fileChooser.ShowDialog();
-            
-            var filepath = fileChooser.FileName;
-            if (String.IsNullOrEmpty(filepath))
-            {
-                return;
-            }
-
-            try
-            {
-                var engineName = MainBoard.SetEngine(filepath);
-                SelectEngineButton.Label = engineName;
-                EngineTab.Header = engineName;
-                Properties.Settings.Default.EnginePath = filepath;
-                InitEngineOptions();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("There was an error reading executable", "Unrecognized engine", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         private void InitEngineOptions()
@@ -204,42 +184,62 @@ namespace Im_Chess
             }
         }
 
-        private void EngineOptionChanged(object sender, RoutedEventArgs e)
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            var checkbox = sender as RibbonCheckBox;
-            if (checkbox != null)
+            Properties.Settings.Default.Save();
+            MainBoard.SaveGame();
+        }
+
+        private void NewGame_OnClick(object sender, RoutedEventArgs e)
+        {
+            MainBoard.NewGame();
+            MainBoard.TwoPlayer = false;
+            EngineOuput.Text = "";
+        }
+
+        private void NewGameBlack_OnClick(object sender, RoutedEventArgs e)
+        {
+            MainBoard.NewGame();
+            MainBoard.TwoPlayer = false;
+            EngineOuput.Text = "";
+            MainBoard.MakeEngineMove();
+        }
+
+        private void NewGameTwoPlayer_OnClick(object sender, RoutedEventArgs e)
+        {
+            MainBoard.NewGame();
+            MainBoard.TwoPlayer = true;
+            EngineOuput.Text = "";
+        }
+
+        private void SelectEngine_OnClick(object sender, RoutedEventArgs e)
+        {
+            var fileChooser = new OpenFileDialog { Filter = "Executables (*.exe)|*.exe", Multiselect = false, Title = "Select engine executable file" };
+            fileChooser.ShowDialog();
+
+            var filepath = fileChooser.FileName;
+            if (String.IsNullOrEmpty(filepath))
             {
-                MainBoard.SetEngineOption(checkbox.Label, checkbox.IsChecked.ToString());
                 return;
             }
 
-            var spinner = sender as IntegerUpDown;
-            if (spinner != null)
+            try
             {
-                MainBoard.SetEngineOption(spinner.Uid, spinner.Value.ToString());
-                return;
+                var engineName = MainBoard.SetEngine(filepath);
+                SelectEngineButton.Label = engineName;
+                EngineTab.Header = engineName;
+                Properties.Settings.Default.EnginePath = filepath;
+                InitEngineOptions();
             }
-
-            // todo
-            //var combo = sender as Combo;
-            //if (combo != null)
-            //{
-            //    MainBoard.SetEngineOption(combo.Text, combo.Value.ToString());
-            //    return;
-            //}
-
-            var button = sender as RibbonButton;
-            if (button != null)
+            catch (Exception ex)
             {
-                MainBoard.SetEngineOption(button.Label, String.Empty);
-                return;
+                MessageBox.Show("There was an error reading executable", "Unrecognized engine", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
 
-            var textbox = sender as RibbonTextBox;
-            if (textbox != null)
-            {
-                MainBoard.SetEngineOption(textbox.Label, textbox.Text);
-            }
+        private void ToggleAutoFlip(object sender, RoutedEventArgs e)
+        {
+            MainBoard.AutoFlip = !MainBoard.AutoFlip;
         }
     }
 }
